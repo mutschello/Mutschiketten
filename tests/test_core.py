@@ -142,7 +142,7 @@ class FakeHid:
             self.pending.append(bytes(64))
         return 65
 
-    def read(self, n, timeout):
+    def read(self, n, timeout=0):
         return list(self.pending.pop(0)) if self.pending else []
 
 
@@ -204,3 +204,54 @@ if __name__ == "__main__":
         if name.startswith("test_"):
             fn()
             print("ok", name)
+
+
+# A material reply as the T50M Pro sends it. Read as status it decodes to
+# "no label roll, labels used up, wrong label type, ribbon error".
+STRAY_MATERIAL = bytes.fromhex("3b1d9772f1131080aa9e041e") + bytes(52)
+
+
+def _fake_printer():
+    fake = FakeHid()
+    sys.modules["hid"] = types.SimpleNamespace(
+        device=lambda: fake,
+        enumerate=lambda vid: [{"path": b"x", "usage_page": 0xFF00, "product_id": 0x207F}])
+    from studio import printer as pr
+    pr.time.sleep = lambda s: None
+    return fake, pr
+
+
+def test_stray_material_reply_is_not_a_print_error():
+    from studio.printer import parse_status
+    assert "Keine Etikettenrolle eingelegt" in parse_status(STRAY_MATERIAL).errors()
+    fake, pr = _fake_printer()
+    p = pr.Printer.open()
+    fake.pending.append(STRAY_MATERIAL)   # late reply of an earlier/foreign query
+    assert p.status().errors() == []
+    fake.pending.append(STRAY_MATERIAL)
+    p.print_images([np.zeros((240, 320), bool)], density=8)
+    assert len(fake.blocks) >= 1
+
+
+def test_unconfirmed_error_is_ignored_but_real_error_is_reported():
+    fake, pr = _fake_printer()
+    p = pr.Printer.open()
+    orig = fake.write
+    calls = {"n": 0}
+
+    def write(data):   # first status reply is garbage, the re-check is clean
+        r = orig(data)
+        if data[5] == 0x11 and calls["n"] == 0:
+            calls["n"] += 1
+            fake.pending[-1] = STRAY_MATERIAL
+        return r
+    fake.write = write
+    assert p.status().errors() == []
+
+    def write_cover(data):   # cover really open: reported twice in a row
+        r = orig(data)
+        if data[5] == 0x11:
+            fake.pending[-1] = bytes([8, 0, 0, 0x08, 0, 0, 0]) + bytes(57)
+        return r
+    fake.write = write_cover
+    assert p.status().errors() == ["Deckel offen"]

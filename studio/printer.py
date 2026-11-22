@@ -153,8 +153,30 @@ class Printer:
         r = self._dev.read(REPORT, timeout_ms)
         return bytes(r) if r else b""
 
+    def _drain(self) -> int:
+        """Discard input reports that are already queued.
+
+        On Windows every open handle receives every reply of the printer. If a
+        reply arrives late, or another program (a second Mutschiketten, the
+        SUPVAN Editor) talks to the printer at the same time, a stale report
+        would otherwise be read as the answer to our next command - e.g. a
+        material reply parsed as status, which looks like "no label roll".
+        Non-blocking reads never cancel a pending read, so no reply is lost.
+        """
+        n = 0
+        try:
+            self._dev.set_nonblocking(1)
+            while n < 64 and self._dev.read(REPORT):
+                n += 1
+        finally:
+            self._dev.set_nonblocking(0)
+        if n:
+            log.debug("discarded %d stale input report(s)", n)
+        return n
+
     def cmd(self, cmd: int, p1: int = 0, p2: int | None = None, timeout_ms: int = 2000) -> bytes:
         with self._io:
+            self._drain()
             self._write(make_cmd(cmd, p1, p2))
             return self._read(timeout_ms)
 
@@ -163,7 +185,20 @@ class Printer:
         r = self.cmd(CMD_INQUIRY_STA)
         if not r:
             raise PrinterError("Drucker antwortet nicht")
-        return parse_status(r)
+        st = parse_status(r)
+        if st.errors():
+            # Errors must be confirmed by a second, fresh status reply so that a
+            # stray report (see _drain) can never abort a print job.
+            log.info("status reports %s (%s), re-checking", st.errors(), r[:8].hex(" "))
+            time.sleep(0.2)
+            r2 = self.cmd(CMD_INQUIRY_STA)
+            if r2:
+                st2 = parse_status(r2)
+                if set(st2.errors()) != set(st.errors()):
+                    log.info("not confirmed (%s)", r2[:8].hex(" "))
+                    r3 = st2.errors() and self.cmd(CMD_INQUIRY_STA)
+                    st = parse_status(r3) if r3 else st2
+        return st
 
     def material(self) -> Material:
         r = self.cmd(CMD_RETURN_MAT)
