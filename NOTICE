@@ -12,3 +12,22 @@ on which this independent implementation is based:
   * KamilBakDev/katasymbol-t50m-print – Copyright (c) 2026 KamilBakDev
 
 Not affiliated with SUPVAN or Katasymbol.
+
+Bundled components (Windows EXE release)
+
+The prebuilt Mutschiketten.exe bundles the following third-party libraries,
+each under its own license:
+
+  * Qt 6 / PySide6       – LGPL-3.0 (https://www.qt.io/licensing,
+                            source: https://code.qt.io/cgit/pyside/pyside-setup.git)
+  * Python 3.12          – PSF License
+  * hidapi (Python)      – BSD / GPL-3.0 / original hidapi license (choice)
+  * Pillow               – MIT-CMU (HPND)
+  * NumPy                – BSD-3-Clause
+  * segno                – BSD-3-Clause
+  * python-barcode       – MIT
+  * PyInstaller bootloader – GPL-2.0 with bootloader exception
+
+PySide6/Qt are used unmodified and loaded at runtime. To use a different
+Qt/PySide6 version, run Mutschiketten from source (see README) with your
+own installation of PySide6.

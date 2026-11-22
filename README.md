@@ -8,7 +8,9 @@ Etiketten-Designer für den **Katasymbol / SUPVAN T50M Pro** unter Windows. Er d
 2. Drucker einschalten und per USB-Kabel anschließen.
 3. `start.bat` doppelklicken. Beim ersten Start wird eine `.venv` angelegt und die Pakete werden installiert, das dauert etwa eine Minute.
 
-Für eine einzelne EXE ohne Python: `build.bat` ausführen. Das Ergebnis liegt dann unter `dist\Mutschiketten.exe`.
+**Ohne Python:** Die fertige `Mutschiketten.exe` gibt es unter [Releases](https://github.com/mutschello/Mutschiketten/releases/latest). Herunterladen, doppelklicken, fertig. Windows SmartScreen warnt eventuell, weil die Datei nicht signiert ist: „Weitere Informationen“ → „Trotzdem ausführen“.
+
+Selbst bauen: `build.bat` ausführen. Das Ergebnis liegt dann unter `dist\Mutschiketten.exe`.
 
 ## Funktionen
 
