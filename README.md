@@ -31,7 +31,7 @@ Selbst bauen: `build.bat` ausführen. Das Ergebnis liegt dann unter `dist\Mutsch
 - **1-Bit-Vorschau (Strg+B):** zeigt Punkt für Punkt, was der Drucker druckt
 - **Platzhalter:** `{datum}`, `{zeit}`, `{kw}`, `{nr}`, `{nr:3}` (ergibt 001) sowie jede CSV-Spalte als `{Spaltenname}`
 - **Serien:**
-  - Einzeln mit Kopien
+  - Einzeln mit Kopien; die Anzahl steht direkt neben dem Drucken-Button
   - Nummeriert (Start, Schrittweite, Anzahl)
   - CSV-Liste mit Zeilenauswahl, z. B. `1-5, 8`. Eine Spalte „Anzahl“ legt die Stückzahl pro Zeile fest.
 - **Drucker:**
