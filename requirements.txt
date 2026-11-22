@@ -1,0 +1,6 @@
+PySide6>=6.6
+hidapi>=0.14
+pillow>=10
+numpy>=1.26
+segno>=1.6
+python-barcode>=0.15
