@@ -72,4 +72,4 @@ Das Protokoll basiert auf den MIT-lizenzierten Projekten heeen/supvan-cups, zpan
 
 © 2026 Jürgen Mutscheller – [mutschweb.de](https://mutschweb.de)
 
-Veröffentlicht unter der [MIT-Lizenz](LICENSE). Fehler und Wünsche gern als Issue melden, Pull Requests sind willkommen.
+Veröffentlicht unter der [MIT-Lizenz](LICENSE). Hinweise zu den Projekten, auf denen das Druckerprotokoll beruht, stehen in [NOTICE](NOTICE). Fehler und Wünsche gern als Issue melden, Pull Requests sind willkommen.

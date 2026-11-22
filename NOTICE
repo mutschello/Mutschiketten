@@ -1,0 +1,14 @@
+Mutschiketten
+Copyright (c) 2026 Jürgen Mutscheller
+
+Third-party notice
+
+The T50 USB protocol (command framing, print-buffer layout, LZMA parameters)
+was reverse-engineered and documented by the following MIT-licensed projects,
+on which this independent implementation is based:
+
+  * heeen/supvan-cups            – Copyright (c) 2026 Florian Hänel
+  * zpan45/t50-windows-driver    – Copyright (c) 2026 T50 Label contributors
+  * KamilBakDev/katasymbol-t50m-print – Copyright (c) 2026 KamilBakDev
+
+Not affiliated with SUPVAN or Katasymbol.
