@@ -8,9 +8,11 @@ Etiketten-Designer für den **Katasymbol / SUPVAN T50M Pro** unter Windows. Er d
 2. Drucker einschalten und per USB-Kabel anschließen.
 3. `start.bat` doppelklicken. Beim ersten Start wird eine `.venv` angelegt und die Pakete werden installiert, das dauert etwa eine Minute.
 
-**Ohne Python:** Die fertige `Mutschiketten.exe` gibt es unter [Releases](https://github.com/mutschello/Mutschiketten/releases/latest). Herunterladen, doppelklicken, fertig. Windows SmartScreen warnt eventuell, weil die Datei nicht signiert ist: „Weitere Informationen“ → „Trotzdem ausführen“.
+**Ohne Python:** Unter [Releases](https://github.com/mutschello/Mutschiketten/releases/latest) die Datei `Mutschiketten-<version>-windows.zip` herunterladen, mit Rechtsklick → „Alle extrahieren“ entpacken, am besten an einen dauerhaften Ort wie `Dokumente`, und im entpackten Ordner `Mutschiketten.exe` starten. Nicht direkt aus dem ZIP heraus starten.
 
-Selbst bauen: `build.bat` ausführen. Das Ergebnis liegt dann unter `dist\Mutschiketten.exe`.
+Das Programm ist nicht digital signiert. Windows SmartScreen kann deshalb „Der Computer wurde durch Windows geschützt“ melden: „Weitere Informationen“ → „Trotzdem ausführen“.
+
+Selbst bauen: `build.ps1` in PowerShell ausführen. Gebaut wird mit Nuitka statt PyInstaller und ausgeliefert als Programmordner im ZIP, weil Virenscanner wie Norton PyInstaller-Programme und selbstentpackende Dateien häufig fälschlich als Bedrohung melden.
 
 ## Funktionen
 
