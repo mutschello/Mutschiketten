@@ -12,6 +12,8 @@ Etiketten-Designer für den **Katasymbol / SUPVAN T50M Pro** unter Windows. Er d
 
 Das Programm ist nicht digital signiert. Windows SmartScreen kann deshalb „Der Computer wurde durch Windows geschützt“ melden: „Weitere Informationen“ → „Trotzdem ausführen“.
 
+**Tipp – Warnung ganz vermeiden:** Vor dem Entpacken mit Rechtsklick auf die ZIP → **Eigenschaften** → unten bei „Sicherheit“ den Haken **„Zulassen“** setzen → OK. Erst danach entpacken. Windows markiert heruntergeladene Dateien als „aus dem Internet“; „Zulassen“ entfernt diese Markierung für die ZIP und alles, was daraus entpackt wird.
+
 Selbst bauen: `build.ps1` in PowerShell ausführen. Gebaut wird mit Nuitka statt PyInstaller und ausgeliefert als Programmordner im ZIP, weil Virenscanner wie Norton PyInstaller-Programme und selbstentpackende Dateien häufig fälschlich als Bedrohung melden.
 
 ## Funktionen
