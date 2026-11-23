@@ -42,7 +42,9 @@ Remove-Item -Recurse -Force build_nuitka -ErrorAction SilentlyContinue
     --enable-plugin=pyside6 `
     --include-package=barcode `
     --include-package=studio `
+    --include-package-data=studio `
     --windows-console-mode=disable `
+    --windows-icon-from-ico=studio\mutschiketten.ico `
     --company-name="Juergen Mutscheller - mutschweb" `
     --product-name="Mutschiketten" `
     --file-version="$version.0" `

@@ -19,3 +19,4 @@ desktop.ini
 # Claude Code
 .claude/settings.local.json
 build_nuitka/
+tools/icon_preview.png
